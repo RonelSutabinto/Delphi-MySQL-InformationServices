@@ -1,0 +1,98 @@
+unit VSampleDemo_MainForm;
+
+interface
+
+uses
+  Windows, Classes, Controls, Forms, ExtCtrls, FormAbout, Frame_Video, Menus,
+  StdCtrls, Buttons, ExtDlgs, Dialogs, pngimage, jpeg, Variants, Graphics ;
+
+
+
+type
+  TForm_Main = class(TForm)
+    Panel_Left: TPanel;
+    Frame_Video1: TFrame1;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
+    OpenPictureDialog1: TOpenPictureDialog;
+    SavePictureDialog1: TSavePictureDialog;
+    Image1: TImage;
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure Frame_Video1SpeedButton2Click(Sender: TObject);
+  private
+    { Private declarations }
+    SplitterRatio : double;
+  public
+    { Public declarations }
+  end;
+
+
+var
+  Form_Main: TForm_Main;
+
+
+implementation
+
+{$R *.dfm}
+
+
+
+
+
+
+
+procedure TForm_Main.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  Screen.Cursor := crHourGlass;
+  Application.ProcessMessages;
+  Frame_Video1.Stop;
+
+  Screen.Cursor := crdefault;
+end;
+
+
+
+procedure TForm_Main.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Frame_Video1.Close;
+
+end;
+
+procedure TForm_Main.FormShow(Sender: TObject);
+begin
+  Frame_Video1.InitFrame;
+
+end;
+
+procedure TForm_Main.Frame_Video1SpeedButton2Click(Sender: TObject);
+var
+  Bitmap: TBitmap;
+  Source: TRect;
+  Dest: TRect;
+begin
+ Bitmap := TBitmap.Create;
+  try
+    with bitmap do
+    begin
+      Width := Frame_Video1.PaintBox_Video.Width;
+      Height := Frame_Video1.PaintBox_Video.Height;
+      Dest := Rect(0, 0, Width, Height);
+    end;
+    with Frame_Video1.PaintBox_Video do
+      Source := Rect(0, 0, Width, Height);
+      bitmap.Canvas.CopyRect(Dest, Frame_Video1.PaintBox_Video.Canvas, Source);
+if not DirectoryExists('c:\clinic') then MkDir('c:\clinic');
+      Bitmap.SaveToFile('c:\clinic\tmppic.bmp');
+  finally
+    Bitmap.Free;
+  end;
+  image1.AutoSize := true;
+  image1.Picture.LoadFromFile('c:\clinic\tmppic.bmp');
+  //Button2.enabled := true;
+end;
+
+end.

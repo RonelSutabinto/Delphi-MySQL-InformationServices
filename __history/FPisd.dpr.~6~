@@ -1,0 +1,22 @@
+program FPisd;
+
+uses
+  Forms,
+  FPISDIntro in 'FPISDIntro.pas' {IntroForm},
+  Data in 'Data.pas' {ISDData: TDataModule},
+  FlexMenu in 'FlexMenu.pas' {FPISDMainMenuForm},
+  MODTOOLS in 'MODTOOLS.PAS',
+  SeniorCitizen in 'SeniorCitizen.pas' {SCForm},
+  computecharges in 'computecharges.pas' {ComputeChargesForm},
+  shedUserFrm in 'shedUserFrm.pas' {schedUserForm};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TIntroForm, IntroForm);
+  Application.CreateForm(TISDData, ISDData);
+  Application.CreateForm(TFPISDMainMenuForm, FPISDMainMenuForm);
+  Application.CreateForm(TschedUserForm, schedUserForm);
+  Application.Run;
+end.

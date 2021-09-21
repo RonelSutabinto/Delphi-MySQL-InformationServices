@@ -1,0 +1,107 @@
+unit contacttracinghistoryFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, AdvSmoothButton,
+  Vcl.ExtCtrls, AdvPanel, Data.DB, DBAccess, MyAccess, MemDS, Vcl.Grids,
+  Vcl.DBGrids, CRGrid, NxCollection;
+
+type
+  TcontacttracingFrm = class(TForm)
+    AdvPanel1: TAdvPanel;
+    AdvPanel2: TAdvPanel;
+    AdvSmoothButton13: TAdvSmoothButton;
+    Label1: TLabel;
+    CRDBGrid1: TCRDBGrid;
+    cntcthistoryQ: TMyQuery;
+    contacttracingQ: TMyDataSource;
+    cntcthistoryQidquedetails: TIntegerField;
+    cntcthistoryQuserid: TStringField;
+    cntcthistoryQcallerName: TStringField;
+    cntcthistoryQregistereddate: TDateTimeField;
+    cntcthistoryQquedate: TDateTimeField;
+    cntcthistoryQdepartment: TStringField;
+    cntcthistoryQclientsName: TStringField;
+    cntcthistoryQcontactno: TStringField;
+    cntcthistoryQqueno: TStringField;
+    cntcthistoryQidin: TIntegerField;
+    cntcthistoryQaddress: TStringField;
+    Edit1: TEdit;
+    TellerEff: TNxButton;
+    NxButton1: TNxButton;
+    procedure AdvSmoothButton13Click(Sender: TObject);
+    procedure TellerEffClick(Sender: TObject);
+    procedure Edit1Click(Sender: TObject);
+    procedure NxButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    userid : String;
+  end;
+
+var
+  contacttracingFrm: TcontacttracingFrm;
+
+implementation
+
+{$R *.dfm}
+
+uses Data, callerFrm;
+
+procedure TcontacttracingFrm.AdvSmoothButton13Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TcontacttracingFrm.Edit1Click(Sender: TObject);
+begin
+   Edit1.SelectAll;
+end;
+
+procedure TcontacttracingFrm.NxButton1Click(Sender: TObject);
+begin
+  with caller_frm do
+  begin
+     if ((uppercase(cntcthistoryQclientsName.Text) = 'N/A') OR
+        (uppercase(cntcthistoryQcontactno.Text) = 'N/A')) then
+     begin
+       idquedetails                := cntcthistoryQidquedetails.AsInteger;
+       addContact                  := false;
+       payorsName_TF.Text          := cntcthistoryQclientsName.Text;
+       contact_TF.Text             := cntcthistoryQcontactno.Text;
+       address_tf.Text             := cntcthistoryQaddress.Text;
+
+       if(cntcthistoryQqueno.Text='no priority') then
+          priorityno_lbl.Caption.Text := '0'
+       else
+          priorityno_lbl.Caption.Text := cntcthistoryQqueno.Text;
+
+       AdvPanel4.Left              := 24;
+       AdvPanel4.top               := 49;
+       AdvPanel1.Enabled           := false;
+       AdvPanel4.Visible           := true;
+       contacttracingFrm.close;
+
+     end
+     else
+     begin
+        MessageDlg('Unable to select completed contact tracing data..', mtError, [mbOK], 0);
+        exit;
+     end;
+  end;
+
+end;
+
+procedure TcontacttracingFrm.TellerEffClick(Sender: TObject);
+begin
+    cntcthistoryQ.Close;
+    cntcthistoryQ.ParamByName('userid').Text :=  userid;
+    cntcthistoryQ.ParamByName('queno').Text  := '%'+Edit1.Text+'%';
+    cntcthistoryQ.ParamByName('name').Text   := '%'+Edit1.Text+'%';
+    cntcthistoryQ.Open;
+end;
+
+end.

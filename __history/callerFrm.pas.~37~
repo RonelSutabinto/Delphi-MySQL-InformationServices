@@ -1,0 +1,159 @@
+unit callerFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AdvSmoothButton, AdvSmoothLabel,
+  Vcl.ExtCtrls, AdvPanel, Data.DB, MemDS, DBAccess, MyAccess;
+
+type
+  Tcaller_frm = class(TForm)
+    AdvPanel1: TAdvPanel;
+    AdvSmoothLabel1: TAdvSmoothLabel;
+    AdvSmoothLabel2: TAdvSmoothLabel;
+    cntrServe_lb: TAdvSmoothLabel;
+    numberServe_lb: TAdvSmoothLabel;
+    AdvPanel2: TAdvPanel;
+    number_lb2: TAdvSmoothLabel;
+    AdvSmoothButton13: TAdvSmoothButton;
+    AdvSmoothButton23: TAdvSmoothButton;
+    cntr_RC_lb: TAdvSmoothLabel;
+    cntr_SC_lb: TAdvSmoothLabel;
+    cntr_C_lb: TAdvSmoothLabel;
+    queCntrQ: TMyQuery;
+    queCntrQregularC: TLargeintField;
+    queCntrQseniorC: TLargeintField;
+    queCntrQcashier: TLargeintField;
+    queCntrQflg: TStringField;
+    manageOutQ: TMyQuery;
+    manageOutQentry: TIntegerField;
+    manageOutQtype: TStringField;
+    manageOutQnumber: TIntegerField;
+    manageOutQdate: TDateField;
+    manageOutQtime: TTimeField;
+    manageOutQcode: TStringField;
+    manageOutQqueid: TIntegerField;
+    manageOutQgroupno: TIntegerField;
+    manageOutQexecutedby: TStringField;
+    manageOutQDepartment: TStringField;
+    manageOutQuserid: TStringField;
+    manageOutQcounter: TStringField;
+    manageOutQnumber_c: TStringField;
+    insertMngoutQ: TMyQuery;
+    queCall_Q: TMyQuery;
+    queCall_QqueID: TIntegerField;
+    queCall_Qtype: TStringField;
+    queCall_Qnumber: TIntegerField;
+    queCall_Qdate: TDateField;
+    queCall_Qtime: TTimeField;
+    queCall_Qcode: TStringField;
+    queCall_Qgroupno: TIntegerField;
+    deleteQueQ: TMyQuery;
+    AdvSmoothButton26: TAdvSmoothButton;
+    updateCallBeepQ: TMyQuery;
+    AdvSmoothButton30: TAdvSmoothButton;
+    AdvSmoothButton29: TAdvSmoothButton;
+    procedure AdvSmoothButton13Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure callNumber(grpNo:Integer);
+    procedure AdvSmoothButton23Click(Sender: TObject);
+    procedure AdvSmoothButton26Click(Sender: TObject);
+    //procedure Tcaller_frm.callNumber( grpNo: Integer; sample: String);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  caller_frm: Tcaller_frm;
+
+implementation
+
+{$R *.dfm}
+
+uses Data;
+
+procedure Tcaller_frm.AdvSmoothButton13Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure Tcaller_frm.AdvSmoothButton23Click(Sender: TObject);
+VAR
+  typ : String;
+begin
+  typ := 'NA';
+  //callNumber(3,typ);
+end;
+
+procedure Tcaller_frm.AdvSmoothButton26Click(Sender: TObject);
+begin
+  updateCallBeepQ.Execute;
+end;
+
+procedure Tcaller_frm.callNumber( grpNo: Integer; type_ :String);
+var
+   tmp:Integer;
+   sample : String;
+begin
+    tmp := grpNo;
+    sample := type_;
+{ tmp := sample;
+ queCall_Q.Close;
+ queCall_Q.ParamByName('groupno').AsInteger := grpNo;
+ //queCall_Q.ParamByName('type').Text := Ttmp;
+ queCall_Q.Open;
+
+ if not queCall_Q.IsEmpty then
+ begin
+
+   insertMngoutQ.ParamByName('type').Text              := queCall_Qtype.text;
+   insertMngoutQ.ParamByName('number').AsInteger       := queCall_Qnumber.AsInteger;
+   insertMngoutQ.ParamByName('date').AsDate            := queCall_Qdate.AsDateTime;
+   insertMngoutQ.ParamByName('time').AsDateTime        := queCall_Qtime.AsDateTime;
+   insertMngoutQ.ParamByName('code').Text              := queCall_Qcode.Text;
+   insertMngoutQ.ParamByName('queid').AsInteger        := queCall_QqueID.AsInteger;
+   insertMngoutQ.ParamByName('groupno').AsInteger      := queCall_Qgroupno.AsInteger;
+   insertMngoutQ.ParamByName('executedby').Text        := ISDData.userQueQuserID.Text;
+   insertMngoutQ.ParamByName('Department').Text        := 'ISD';
+   insertMngoutQ.ParamByName('userid').Text            := ISDData.userQueQName.Text;
+   insertMngoutQ.ParamByName('counter').Text           := 'Counter '+ISDData.userQueQnumber.Text;
+   insertMngoutQ.Execute;
+
+   deleteQueQ.ParamByName('queID').Text := queCall_QqueID.Text;
+   deleteQueQ.Execute;
+
+
+    queCntrQ.Close;
+    queCntrQ.Open;
+
+    manageOutQ.Close;
+    manageOutQ.Open;
+
+    cntrServe_lb.Caption.Text   := manageOutQcounter.Text;
+    numberServe_lb.Caption.Text := manageOutQnumber_c.Text;
+
+    cntr_RC_lb.Caption.Text     := queCntrQregularC.Text;
+    cntr_SC_lb.Caption.Text     := queCntrQseniorC.Text;
+    cntr_C_lb.Caption.Text      := queCntrQcashier.Text;
+ end;                                                    }
+end;
+procedure Tcaller_frm.FormShow(Sender: TObject);
+begin
+  queCntrQ.Close;
+  queCntrQ.Open;
+
+  manageOutQ.Close;
+  manageOutQ.Open;
+
+  cntrServe_lb.Caption.Text   := manageOutQcounter.Text;
+  numberServe_lb.Caption.Text := manageOutQnumber_c.Text;
+
+  cntr_RC_lb.Caption.Text     := queCntrQregularC.Text;
+  cntr_SC_lb.Caption.Text     := queCntrQseniorC.Text;
+  cntr_C_lb.Caption.Text      := queCntrQcashier.Text;
+end;
+
+end.

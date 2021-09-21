@@ -1,0 +1,234 @@
+unit computecharges;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, NxCollection, StdCtrls, NxDBColumns, NxColumns, NxScrollControl,
+  NxCustomGridControl, NxCustomGrid, NxDBGrid, Mask, DBCtrls, NxEdit, DB, MemDS,
+  DBAccess, MyAccess, Grids, DBGrids, CRGrid;
+
+type
+  TComputeChargesForm = class(TForm)
+    CCPanel: TNxHeaderPanel;
+    Label30: TLabel;
+    Label95: TLabel;
+    Label96: TLabel;
+    Label97: TLabel;
+    DBEdit58: TDBEdit;
+    DBEdit59: TDBEdit;
+    DBEdit60: TDBEdit;
+    DBEdit61: TDBEdit;
+    CCAdd: TNxLinkLabel;
+    CCDelete: TNxLinkLabel;
+    CCClose: TNxLinkLabel;
+    CCAddPanel: TNxHeaderPanel;
+    Label98: TLabel;
+    Label99: TLabel;
+    DBEdit62: TDBEdit;
+    DBEdit63: TDBEdit;
+    CCSave: TNxLinkLabel;
+    CCCancel: TNxLinkLabel;
+    NxButton15: TNxButton;
+    AccountListPanel: TNxHeaderPanel;
+    NextDBGrid15: TNextDBGrid;
+    TNxDBTextColumn83: TNxDBTextColumn;
+    TNxDBTextColumn84: TNxDBTextColumn;
+    NxLinkLabel34: TNxLinkLabel;
+    NxLinkLabel49: TNxLinkLabel;
+    FindAccount: TNxButtonEdit;
+    CRDBGrid1: TCRDBGrid;
+    NxLinkLabel1: TNxLinkLabel;
+    tmpQ: TMyQuery;
+    procedure CCAddClick(Sender: TObject);
+    procedure CCDeleteClick(Sender: TObject);
+    procedure CCCloseClick(Sender: TObject);
+    procedure CCSaveClick(Sender: TObject);
+    procedure NxButton15Click(Sender: TObject);
+    procedure NxLinkLabel34Click(Sender: TObject);
+    procedure NxLinkLabel49Click(Sender: TObject);
+    procedure FindAccountButtonClick(Sender: TObject);
+    procedure CCCancelClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure NxLinkLabel1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    var
+      isUpdate : Boolean;
+  end;
+
+var
+  ComputeChargesForm: TComputeChargesForm;
+  WithEVAT : Boolean;
+
+implementation
+
+uses Data;
+
+{$R *.dfm}
+
+procedure TComputeChargesForm.CCAddClick(Sender: TObject);
+begin
+  tmpQ.Close;
+  tmpQ.SQL.Clear;
+  tmpQ.SQL.Add('Select * from complaints where idcomplaints like :id and ornumber is not NULL');
+  tmpQ.ParamByName('id').Text := ISDData.complaintsidComplaints.Text;
+  tmpQ.Open;
+
+  if not tmpQ.IsEmpty then
+  begin
+    messagedlg('Unable to Add, complaint order was already paid..',mtWarning,[mbOK],0);
+    exit;
+  end;
+
+  CCAddPanel.Left    := 24;
+  CCAddPanel.Top     := 157;
+  CCAddPanel.Visible := True;
+  CCAddPanel.BringToFront;
+
+  DBEdit62.SetFocus;
+  ISDData.NewApplicantCharge.Append;
+
+end;
+
+procedure TComputeChargesForm.CCCancelClick(Sender: TObject);
+begin
+  ISDData.NewApplicantCharge.Cancel;
+  CCAddPanel.Visible := False;
+end;
+
+procedure TComputeChargesForm.CCCloseClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TComputeChargesForm.CCDeleteClick(Sender: TObject);
+begin
+  tmpQ.Close;
+  tmpQ.SQL.Clear;
+  tmpQ.SQL.Add('Select * from complaints where idcomplaints like :id and ornumber is not NULL');
+  tmpQ.ParamByName('id').Text := ISDData.complaintsidComplaints.Text;
+  tmpQ.Open;
+
+  if not tmpQ.IsEmpty then
+  begin
+    messagedlg('Unable to delete, complaint order was already paid..',mtWarning,[mbOK],0);
+    exit;
+  end;
+
+  If ISDData.NewApplicantCharge.IsEmpty then
+    begin
+      MessageDlg('No record to delete', mtError, [mbOK], 0);
+      exit;
+    end;
+  ISDData.NewApplicantCharge.Delete;
+end;
+
+procedure TComputeChargesForm.CCSaveClick(Sender: TObject);
+Var Vat : Currency;
+begin
+  ISDData.NewApplicantCharge.Post;
+  ISDData.NewApplicantCharge.Close;
+  ISDData.NewApplicantCharge.Open;
+  ISDData.NewApplicantCharge.Last;
+
+  If WithEvat = True then
+   begin
+    VAT := ISDData.NewApplicantChargeamount.AsCurrency * 0.12;
+    ISDData.NewApplicantCharge.Append;
+    ISDData.NewApplicantChargedescription.Text  := 'EVAT';
+    ISDData.NewApplicantChargeamount.AsCurrency := VAT;
+    ISDData.NewApplicantCharge.Post;
+   end;
+
+  CCAddPanel.Visible := False;
+
+end;
+
+procedure TComputeChargesForm.FindAccountButtonClick(Sender: TObject);
+begin
+  With ISDData do
+    begin
+      AccountCode.Close;
+      AccountCode.ParamByName('description').Text := '%'+FindAccount.Text+'%';
+      AccountCode.Open;
+    end;
+end;
+
+procedure TComputeChargesForm.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action := caFree;
+  ComputeChargesForm := Nil;
+end;
+
+procedure TComputeChargesForm.FormShow(Sender: TObject);
+begin
+  if isUpdate then
+  NxLinkLabel1.Visible := true
+  else
+  NxLinkLabel1.Visible := false;
+
+end;
+
+procedure TComputeChargesForm.NxButton15Click(Sender: TObject);
+begin
+  AccountListPanel.Left    := 11;
+  AccountListPanel.Top     := 51;
+  AccountListPanel.Visible := True;
+  AccountListPanel.BringToFront;
+  FindAccount.SetFocus;
+end;
+
+procedure TComputeChargesForm.NxLinkLabel1Click(Sender: TObject);
+begin
+  tmpQ.Close;
+  tmpQ.SQL.Clear;
+  tmpQ.SQL.Add('Select * from complaints where idcomplaints like :id and ornumber is not NULL');
+  tmpQ.ParamByName('id').Text := ISDData.complaintsidComplaints.Text;
+  tmpQ.Open;
+
+  if not tmpQ.IsEmpty then
+  begin
+    messagedlg('Unable to update, complaint order was already paid..',mtWarning,[mbOK],0);
+    exit;
+  end;
+
+  if NxLinkLabel1.Caption='Edit' then
+  begin
+    ISDData.NewApplicantCharge.Edit;
+    NxLinkLabel1.Caption := 'Save';
+    CRDBGrid1.Columns[1].ReadOnly := false;
+  end
+  else if NxLinkLabel1.Caption='Save' then
+  begin
+    ISDData.NewApplicantCharge.Post;
+    NxLinkLabel1.Caption := 'Edit';
+    CRDBGrid1.Columns[1].ReadOnly := true;
+
+    showmessage('Compute charges successfully saved..');
+  end;
+end;
+
+procedure TComputeChargesForm.NxLinkLabel34Click(Sender: TObject);
+begin
+  WithEVAT := False;
+  If ISDData.AccountCodeWithEVAT.Text = '1' then WithEVAT := True;
+  ISDData.NewApplicantChargedescription.Text := ISDData.AccountCodeDescription.Text;
+  ISDData.AccountCode.Close;
+  AccountListPanel.Visible := False;
+  DBEdit62.ReadOnly := True;
+  DBEdit62.SetFocus;
+end;
+
+procedure TComputeChargesForm.NxLinkLabel49Click(Sender: TObject);
+begin
+  ISDData.AccountCode.Close;
+  AccountListPanel.Visible := False;
+  DBEdit62.SetFocus;
+end;
+
+end.

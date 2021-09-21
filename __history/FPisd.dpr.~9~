@@ -1,0 +1,39 @@
+program FPisd;
+
+uses
+  Forms,
+  FPISDIntro in 'FPISDIntro.pas' {IntroForm},
+  Data in 'Data.pas' {ISDData: TDataModule},
+  FlexMenu in 'FlexMenu.pas' {FPISDMainMenuForm},
+  MODTOOLS in 'MODTOOLS.PAS',
+  SeniorCitizen in 'SeniorCitizen.pas' {SCForm},
+  computecharges in 'computecharges.pas' {ComputeChargesForm},
+  shedUserFrm in 'shedUserFrm.pas' {schedUserForm},
+  Direct3D9 in 'webcam\DirectX\Direct3D9.pas',
+  DirectDraw in 'webcam\DirectX\DirectDraw.pas',
+  DirectShow9 in 'webcam\DirectX\DirectShow9.pas',
+  DirectSound in 'webcam\DirectX\DirectSound.pas',
+  DXTypes in 'webcam\DirectX\DXTypes.pas',
+  CameraForm in 'webcam\CameraForm.pas' {Camerafrm},
+  Frame_Video in 'webcam\Frame_Video.pas' {Frame1: TFrame},
+  VFrames in 'webcam\VFrames.pas',
+  VSample in 'webcam\VSample.pas',
+  queHistoryForm in 'queHistoryForm.pas' {quehistoryFrm},
+  callerFrm in 'callerFrm.pas' {caller_frm};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TIntroForm, IntroForm);
+  Application.CreateForm(TISDData, ISDData);
+  Application.CreateForm(TFPISDMainMenuForm, FPISDMainMenuForm);
+  Application.CreateForm(TschedUserForm, schedUserForm);
+  Application.CreateForm(TquehistoryFrm, quehistoryFrm);
+  Application.CreateForm(Tcaller_frm, caller_frm);
+  //Application.CreateForm(TFrame1, Frame1);
+  Application.CreateForm(TCamerafrm, Camerafrm);
+  Application.CreateForm(TCamerafrm, Camerafrm);
+  //Application.CreateForm(TForm_Main, Form_Main);
+  Application.Run;
+end.

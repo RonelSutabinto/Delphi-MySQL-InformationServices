@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/03/10 16:32:27.863.pas,D:\Source Codes\Project folder\webcam\webcam\FormAbout.pas=</Transaction>
+    <Transaction>2017/03/10 16:32:27.863.dfm,D:\Source Codes\Project folder\webcam\webcam\FormAbout.dfm=</Transaction>
+    <Transaction>2017/03/10 16:42:08.663.pas,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:08.663.dfm,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:42:08.672.pas,D:\Source Codes\Project folder\webcam\webcam\MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:08.672.dfm,D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:42:22.189.pas,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:22.189.dfm,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:42:22.202.pas,D:\Source Codes\Project folder\webcam\webcam\MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:22.202.dfm,D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:42:48.830.pas,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:48.830.dfm,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:42:48.839.pas,D:\Source Codes\Project folder\webcam\webcam\MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas</Transaction>
+    <Transaction>2017/03/10 16:42:48.840.dfm,D:\Source Codes\Project folder\webcam\webcam\MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:44:22.753.pas,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.pas=D:\Source Codes\Project folder\webcam\webcam\CameraForm.pas</Transaction>
+    <Transaction>2017/03/10 16:44:22.753.dfm,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo_MainForm.dfm=D:\Source Codes\Project folder\webcam\webcam\CameraForm.dfm</Transaction>
+    <Transaction>2017/03/10 16:45:06.566.dproj,D:\Source Codes\Project folder\webcam\webcam\VSampleDemo.dproj=D:\Source Codes\Project folder\webcam\webcam\CameraCapture.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

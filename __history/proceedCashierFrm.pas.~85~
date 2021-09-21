@@ -1,0 +1,199 @@
+unit proceedCashierFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, AdvObj, BaseGrid, AdvGrid,
+  DBAdvGrid, AdvSmoothButton, AdvSmoothLabel, Vcl.ExtCtrls, AdvPanel, Data.DB,
+  MemDS, DBAccess, MyAccess, Vcl.StdCtrls, AdvGroupBox, AdvOfficeButtons;
+
+type
+  TproceedtoCashierFrm = class(TForm)
+    DBAdvGrid1: TDBAdvGrid;
+    DBAdvGrid2: TDBAdvGrid;
+    AdvPanel1: TAdvPanel;
+    AdvPanel2: TAdvPanel;
+    number_lb2: TAdvSmoothLabel;
+    AdvSmoothButton13: TAdvSmoothButton;
+    AdvSmoothButton29: TAdvSmoothButton;
+    manageoutQ: TMyQuery;
+    manageoutQentry: TIntegerField;
+    manageoutQtype: TStringField;
+    manageoutQnumber: TIntegerField;
+    manageoutQdate: TDateField;
+    manageoutQtime: TTimeField;
+    manageoutQcode: TStringField;
+    manageoutQqueid: TIntegerField;
+    manageoutQgroupno: TIntegerField;
+    manageoutQexecutedby: TStringField;
+    manageoutQDepartment: TStringField;
+    manageoutQuserid: TStringField;
+    manageoutQcounter: TStringField;
+    manageoutQisbeep: TBooleanField;
+    manageoutQnumberC: TStringField;
+    manageoutDS: TMyDataSource;
+    insertQueQ: TMyQuery;
+    queQ: TMyQuery;
+    queQqueID: TIntegerField;
+    queQtype: TStringField;
+    queQnumber: TIntegerField;
+    queQdate: TDateField;
+    queQtime: TTimeField;
+    queQcode: TStringField;
+    queQgroupno: TIntegerField;
+    queQuser: TStringField;
+    queQnumberC: TStringField;
+    queDS: TMyDataSource;
+    AdvOfficeRadioGroup1: TAdvOfficeRadioGroup;
+    AdvSmoothLabel1: TAdvSmoothLabel;
+    AdvSmoothLabel4: TAdvSmoothLabel;
+    proccedHistoryQ: TMyQuery;
+    MyQuery1: TMyQuery;
+    procedure FormShow(Sender: TObject);
+    procedure AdvSmoothButton13Click(Sender: TObject);
+    procedure proceedto(grpNo : Integer;optn,typePri :String);
+    procedure AdvSmoothButton29Click(Sender: TObject);
+    procedure AdvOfficeRadioGroup1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  proceedtoCashierFrm: TproceedtoCashierFrm;
+
+implementation
+
+{$R *.dfm}
+
+uses Data;
+
+procedure TproceedtoCashierFrm.AdvOfficeRadioGroup1Click(Sender: TObject);
+var
+ typeP : String;
+begin
+  case AdvOfficeRadioGroup1.ItemIndex of
+   0:typeP  := 'CAS';
+    1:typeP := 'RP';
+    2:typeP := 'SP';
+    3:typeP := 'BI';
+    4:typeP := 'BC';
+  end;
+
+  queQ.Close;
+  queQ.ParamByName('user').Text         := ISDData.userQueQentryUser.Text;
+  queQ.ParamByName('typePrimary').Text  := typeP;
+  queQ.Open;
+end;
+
+procedure TproceedtoCashierFrm.AdvSmoothButton13Click(Sender: TObject);
+begin
+  close;
+end;
+procedure TproceedtoCashierFrm.proceedto(grpNo : Integer;optn,typePri :String);
+begin
+   if (MessageDlg('Consumer''s number: '+manageoutQtype.Text+ manageoutQnumber.Text+#13
+      +'Area you sure, you want to proceed this number to the '+optn+'?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then exit;
+
+  proccedHistoryQ.ParamByName('type').Text          := manageoutQtype.Text;
+  proccedHistoryQ.ParamByName('number').Text        := manageoutQnumber.Text;
+  proccedHistoryQ.ParamByName('date').AsDate        := manageoutQdate.AsDateTime;
+  proccedHistoryQ.ParamByName('time').AsDateTime    := now; //manageoutQtime.AsDateTime;
+  proccedHistoryQ.ParamByName('code').Text          := manageoutQcode.Text;
+  proccedHistoryQ.ParamByName('groupno').AsInteger  := grpNo;
+  proccedHistoryQ.ParamByName('user').Text          := ISDData.userQueQentryUser.Text;
+  proccedHistoryQ.ParamByName('typePrimary').Text   := typePri;
+  proccedHistoryQ.Execute;
+
+
+  insertQueQ.ParamByName('type').Text          := manageoutQtype.Text;
+  insertQueQ.ParamByName('number').Text        := manageoutQnumber.Text;
+  insertQueQ.ParamByName('date').AsDate        := manageoutQdate.AsDateTime;
+  insertQueQ.ParamByName('time').AsDateTime    := now; //manageoutQtime.AsDateTime;
+  insertQueQ.ParamByName('code').Text          := manageoutQcode.Text;
+  insertQueQ.ParamByName('groupno').AsInteger  := grpNo;
+  insertQueQ.ParamByName('user').Text          := ISDData.userQueQentryUser.Text;
+  insertQueQ.ParamByName('typePrimary').Text   := typePri;
+  insertQueQ.Execute;
+
+  //manageoutQ.Delete;
+
+
+  queQ.Close;
+  queQ.ParamByName('user').Text             := ISDData.userQueQentryUser.Text;
+  queQ.ParamByName('typePrimary').Text      := typePri;
+  queQ.Open;
+
+
+
+end;
+
+
+procedure TproceedtoCashierFrm.AdvSmoothButton29Click(Sender: TObject);
+var
+ grpNo :integer;
+ optn  : String;
+ typeP : String;
+begin
+  case AdvOfficeRadioGroup1.ItemIndex of
+    0:begin
+      grpNo := 2;
+      optn  := 'Cashier';
+      typeP := 'CAS';
+    end;
+    1:begin
+      grpNo := 3;
+      optn  := 'Teller';
+      typeP := 'RP';
+
+    end;
+    2:begin
+      grpNo := 4;
+      optn  := 'Senior Citizen Teller';
+      typeP := 'SP';
+    end;
+    3:begin
+      grpNo := 5;
+      optn  := 'Billing Inquiry';
+      typeP := 'BI';
+    end;
+    4:begin
+      grpNo := 6;
+      optn  := 'Billing Complaint';
+      typeP := 'BC';
+    end;
+  end;
+  proceedto(grpNo,optn,typeP);
+end;
+
+procedure TproceedtoCashierFrm.FormShow(Sender: TObject);
+var
+ grpNo :integer;
+ typeP : String;
+begin
+
+  manageoutQ.Close;
+  //manageoutQ.ParamByName('date').Text   := FormatDateTime('YYYY-MM-DD',now);
+  manageoutQ.ParamByName('depart').Text  := 'ISD';
+  manageoutQ.ParamByName('id').Text      := ISDData.userQueQuserID.Text;
+  //manageoutQ.ParamByName('counter').Text := ISDData.userQueQcounter.Text;
+  manageoutQ.Open;
+
+
+  case AdvOfficeRadioGroup1.ItemIndex of
+    0:typeP := 'CAS';
+    1:typeP := 'RP';
+    2:typeP := 'SP';
+    3:typeP := 'BI';
+    4:typeP := 'BC';
+  end;
+
+  queQ.Close;
+  queQ.ParamByName('user').Text             := ISDData.userQueQentryUser.Text;
+  queQ.ParamByName('typePrimary').Text      := typeP;
+  queQ.Open;
+end;
+
+end.

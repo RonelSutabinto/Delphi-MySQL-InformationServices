@@ -1,0 +1,539 @@
+object schedUserForm: TschedUserForm
+  Left = 0
+  Top = 0
+  BorderStyle = bsNone
+  Caption = 'User'#39's Schedule Access'
+  ClientHeight = 492
+  ClientWidth = 600
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Bevel1: TBevel
+    Left = -226
+    Top = 474
+    Width = 508
+    Height = 162
+    Shape = bsFrame
+  end
+  object Label1: TLabel
+    Left = 54
+    Top = 158
+    Width = 82
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Mon Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 57
+    Top = 187
+    Width = 79
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Tue Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 54
+    Top = 214
+    Width = 84
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Wen Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 58
+    Top = 243
+    Width = 80
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Thu Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 330
+    Top = 159
+    Width = 72
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Fri Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 326
+    Top = 188
+    Width = 76
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Sat Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 324
+    Top = 215
+    Width = 80
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Sun Start Time'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 351
+    Top = 244
+    Width = 53
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Start Date'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 353
+    Top = 270
+    Width = 49
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'End Date'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object AdvSmoothLabel1: TAdvSmoothLabel
+    Left = 0
+    Top = 0
+    Width = 600
+    Height = 31
+    Fill.Color = 52377
+    Fill.ColorTo = 6723891
+    Fill.ColorMirror = clNone
+    Fill.ColorMirrorTo = clNone
+    Fill.GradientType = gtVertical
+    Fill.GradientMirrorType = gtSolid
+    Fill.BorderColor = clNone
+    Fill.Rounding = 0
+    Fill.ShadowOffset = 0
+    Fill.Glow = gmNone
+    Caption.Text = '      User'#39's Scheduled Access'
+    Caption.Location = plCenterLeft
+    Caption.Font.Charset = ANSI_CHARSET
+    Caption.Font.Color = clWindowText
+    Caption.Font.Height = -16
+    Caption.Font.Name = 'Arial Black'
+    Caption.Font.Style = [fsBold]
+    Caption.ColorStart = clYellow
+    Caption.ColorEnd = clWhite
+    CaptionShadow.Text = '      User'#39's Scheduled Access'
+    CaptionShadow.Font.Charset = DEFAULT_CHARSET
+    CaptionShadow.Font.Color = clWindowText
+    CaptionShadow.Font.Height = -27
+    CaptionShadow.Font.Name = 'Tahoma'
+    CaptionShadow.Font.Style = []
+    Version = '1.6.0.0'
+    Transparent = False
+    Align = alTop
+    ExplicitLeft = -8
+    ExplicitTop = 56
+    ExplicitWidth = 548
+  end
+  object Label10: TLabel
+    Left = 57
+    Top = 69
+    Width = 35
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'UserID'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 62
+    Top = 91
+    Width = 30
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Name'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label12: TLabel
+    Left = 333
+    Top = 71
+    Width = 43
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Position'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 320
+    Top = 93
+    Width = 56
+    Height = 14
+    Alignment = taRightJustify
+    Caption = 'Restriction'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Shape1: TShape
+    Left = 0
+    Top = 31
+    Width = 2
+    Height = 459
+    Align = alLeft
+    ExplicitHeight = 393
+  end
+  object Shape2: TShape
+    Left = 598
+    Top = 31
+    Width = 2
+    Height = 459
+    Align = alRight
+    ExplicitLeft = 8
+    ExplicitHeight = 393
+  end
+  object Shape3: TShape
+    Left = 0
+    Top = 490
+    Width = 600
+    Height = 2
+    Align = alBottom
+    ExplicitTop = 374
+    ExplicitWidth = 548
+  end
+  object DBEdit1: TDBEdit
+    Left = 408
+    Top = 156
+    Width = 106
+    Height = 21
+    DataField = 'monStart'
+    DataSource = schedDS
+    TabOrder = 0
+  end
+  object DBEdit2: TDBEdit
+    Left = 408
+    Top = 183
+    Width = 106
+    Height = 21
+    DataField = 'monEnd'
+    DataSource = schedDS
+    TabOrder = 1
+  end
+  object DBEdit3: TDBEdit
+    Left = 408
+    Top = 212
+    Width = 106
+    Height = 21
+    DataField = 'monStart'
+    DataSource = schedDS
+    TabOrder = 2
+  end
+  object DBEdit4: TDBEdit
+    Left = 144
+    Top = 156
+    Width = 106
+    Height = 21
+    DataField = 'monEnd'
+    DataSource = schedDS
+    TabOrder = 3
+  end
+  object DBEdit5: TDBEdit
+    Left = 144
+    Top = 185
+    Width = 106
+    Height = 21
+    DataField = 'monStart'
+    DataSource = schedDS
+    TabOrder = 4
+  end
+  object DBEdit6: TDBEdit
+    Left = 144
+    Top = 212
+    Width = 106
+    Height = 21
+    DataField = 'monEnd'
+    DataSource = schedDS
+    TabOrder = 5
+  end
+  object DBEdit7: TDBEdit
+    Left = 144
+    Top = 241
+    Width = 106
+    Height = 21
+    DataField = 'monStart'
+    DataSource = schedDS
+    TabOrder = 6
+  end
+  object NxDatePicker1: TNxDatePicker
+    Left = 408
+    Top = 241
+    Width = 106
+    Height = 21
+    Color = 15400917
+    TabOrder = 7
+    Text = '2/6/2017'
+    HideFocus = False
+    Date = 42772.000000000000000000
+    NoneCaption = 'None'
+    TodayCaption = 'Today'
+  end
+  object NxDatePicker2: TNxDatePicker
+    Left = 408
+    Top = 268
+    Width = 106
+    Height = 21
+    Color = 15400917
+    TabOrder = 8
+    Text = '2/6/2017'
+    HideFocus = False
+    Date = 42772.000000000000000000
+    NoneCaption = 'None'
+    TodayCaption = 'Today'
+  end
+  object NxButton1: TNxButton
+    Left = 457
+    Top = 448
+    Width = 75
+    Caption = 'Close'
+    Glyph.Data = {
+      36030000424D3603000000000000360000002800000010000000100000000100
+      1800000000000003000074120000741200000000000000000000FFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFF6F6F6C6C6C6FCFCFCFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCC7C7C7F8F8
+      F8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6535353232323696969FBFBFBFF
+      FFFFFFFFFFFBFBFB666666232323565656F7F7F7FFFFFFFFFFFFFFFFFFFFFFFF
+      C2C2C2232323232323232323696969FBFBFBFBFBFB6666662323232323232323
+      23C6C6C6FFFFFFFFFFFFFFFFFFFFFFFFFAFAFA64646423232323232323232369
+      6969676767232323232323232323666666FCFCFCFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFAFAFA656565232323232323232323232323232323232323676767FBFB
+      FBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAFA65656523232323
+      2323232323232323676767FBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFAFAFA666666232323232323232323232323696969FBFBFBFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAFA66666623232323232323
+      2323232323232323232323696969FBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FCFCFC6666662323232323232323236666666565652323232323232323236969
+      69FCFCFCFFFFFFFFFFFFFFFFFFFFFFFFC1C1C1232323232323232323666666FA
+      FAFAFAFAFA646464232323232323232323C7C7C7FFFFFFFFFFFFFFFFFFFFFFFF
+      F5F5F5505050232323666666FAFAFAFFFFFFFFFFFFFAFAFA6464642323235252
+      52F6F6F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F5C1C1C1FCFCFCFFFFFFFF
+      FFFFFFFFFFFFFFFFFAFAFAC0C0C0F6F6F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    TabOrder = 9
+    Transparent = True
+    OnClick = NxButton1Click
+  end
+  object Edit1: TEdit
+    Left = 98
+    Top = 64
+    Width = 184
+    Height = 21
+    Color = clBtnFace
+    Enabled = False
+    TabOrder = 10
+  end
+  object Edit2: TEdit
+    Left = 98
+    Top = 91
+    Width = 184
+    Height = 21
+    Color = clBtnFace
+    Enabled = False
+    TabOrder = 11
+  end
+  object Edit3: TEdit
+    Left = 382
+    Top = 91
+    Width = 132
+    Height = 21
+    Color = clBtnFace
+    Enabled = False
+    TabOrder = 12
+  end
+  object Edit4: TEdit
+    Left = 382
+    Top = 64
+    Width = 132
+    Height = 21
+    Color = clBtnFace
+    Enabled = False
+    TabOrder = 13
+  end
+  object NxButton2: TNxButton
+    Left = 376
+    Top = 448
+    Width = 75
+    Caption = 'Save'
+    Glyph.Data = {
+      36030000424D3603000000000000360000002800000010000000100000000100
+      1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000FFFFFFFFFFFF000000
+      0202022727277575758888888282828282828282828282828484848989893B3B
+      3B040404000000FFFFFFFFFFFF000000060606616161EEEEEEFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFF8888880A0A0A000000FFFFFFFFFFFF000000
+      060606636363F1F1F1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8888
+      880B0B0B000000FFFFFFFFFFFF000000060606626262F0F0F0FEFEFEFEFEFEFE
+      FEFEFEFEFEFEFEFEFEFEFEFFFFFF8787870B0B0B000000FFFFFFFFFFFF000000
+      050505585858D2D2D2E1E1E1E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E6E6E67979
+      790A0A0A000000FFFFFFFFFFFF0000000000001111112E2E2E35353533333333
+      3333333333333333343434373737191919020202000000FFFFFFFFFFFF000000
+      0000000101010202020202020202020202020202020202020202020202020101
+      01000000000000FFFFFFFFFFFF00000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000FFFFFFFFFFFF000000
+      0000000101011B1B1B6565659595958D8D8D8E8E8E9393938282822D2D2D0303
+      03000000000000FFFFFFFFFFFF000000000000020202313131B4B4B4FAFAFAF7
+      F7F7F9F9F9FCFCFCEDEDED505050050505000000000000FFFFFFFFFFFF000000
+      0000000303033A3A3AD2D2D2FFFFFFFFFFFFFFFFFFE3E3E3FFFFFF6767670606
+      06000000000000FFFFFFFFFFFF000000000000000000111111737373AAAAAAA6
+      A6A69595954C4C4C848484333333010101101010484848FFFFFFFFFFFF000000
+      0000000000000000000000000C0C0C0A0A0A0505050000000000000000000000
+      00464646BABABAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    TabOrder = 14
+    Transparent = True
+    OnClick = NxButton2Click
+  end
+  object schedQ: TMyQuery
+    Connection = ISDData.MyConnection1
+    SQL.Strings = (
+      'Select * from loguser')
+    Left = 16
+    Top = 96
+    object schedQidloguser: TIntegerField
+      FieldName = 'idloguser'
+    end
+    object schedQusername: TStringField
+      FieldName = 'username'
+      Size = 30
+    end
+    object schedQmonEnd: TTimeField
+      FieldName = 'monEnd'
+      DisplayFormat = 'hh:mm:ss AM/PM'
+      EditMask = '!90:00:00>LL;1;_'
+    end
+    object schedQmonStart: TTimeField
+      FieldName = 'monStart'
+      DisplayFormat = 'hh:mm:ss AM/PM'
+      EditMask = '!90:00:00>LL;1;_'
+    end
+    object schedQtueEnd: TTimeField
+      FieldName = 'tueEnd'
+    end
+    object schedQtueStart: TTimeField
+      FieldName = 'tueStart'
+    end
+    object schedQwenEnd: TTimeField
+      FieldName = 'wenEnd'
+    end
+    object schedQwenStart: TTimeField
+      FieldName = 'wenStart'
+    end
+    object schedQthuEnd: TTimeField
+      FieldName = 'thuEnd'
+    end
+    object schedQthuStart: TTimeField
+      FieldName = 'thuStart'
+    end
+    object schedQfriEnd: TTimeField
+      FieldName = 'friEnd'
+    end
+    object schedQfriStart: TTimeField
+      FieldName = 'friStart'
+    end
+    object schedQsatEnd: TTimeField
+      FieldName = 'satEnd'
+    end
+    object schedQsatStart: TTimeField
+      FieldName = 'satStart'
+    end
+    object schedQsunEnd: TTimeField
+      FieldName = 'sunEnd'
+    end
+    object schedQsunStart: TTimeField
+      FieldName = 'sunStart'
+    end
+    object schedQdateStart: TDateField
+      FieldName = 'dateStart'
+    end
+    object schedQdateEnd: TDateField
+      FieldName = 'dateEnd'
+    end
+  end
+  object schedDS: TMyDataSource
+    DataSet = schedQ
+    Left = 16
+    Top = 48
+  end
+end

@@ -1,0 +1,151 @@
+object Form_Main: TForm_Main
+  Left = 392
+  Top = 223
+  BorderIcons = [biSystemMenu]
+  Caption = 'Camera'
+  ClientHeight = 546
+  ClientWidth = 734
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  Scaled = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel_Left: TPanel
+    Left = 0
+    Top = 0
+    Width = 377
+    Height = 496
+    Align = alLeft
+    BevelKind = bkFlat
+    BevelOuter = bvNone
+    TabOrder = 0
+    object SpeedButton1: TSpeedButton
+      Left = 312
+      Top = 16
+      Width = 39
+      Height = 43
+    end
+    inline Frame_Video1: TFrame1
+      Left = 0
+      Top = 0
+      Width = 373
+      Height = 492
+      Align = alClient
+      TabOrder = 0
+      ExplicitWidth = 373
+      ExplicitHeight = 492
+      inherited Panel_Top: TPanel
+        Width = 373
+        BevelKind = bkFlat
+        BevelOuter = bvNone
+        ExplicitWidth = 373
+        inherited Label_Cameras: TLabel
+          Width = 69
+          Caption = 'Select Camera'
+          ExplicitWidth = 69
+        end
+        inherited SpeedButton_RunVideo: TSpeedButton
+          Left = 207
+          ExplicitLeft = 207
+        end
+        inherited SpeedButton_Pause: TSpeedButton
+          Left = 328
+          Top = 28
+          Visible = False
+          ExplicitLeft = 328
+          ExplicitTop = 28
+        end
+        inherited SpeedButton_Stop: TSpeedButton
+          Left = 233
+          Top = 15
+          ExplicitLeft = 233
+          ExplicitTop = 15
+        end
+        inherited SpeedButton_VidSettings: TSpeedButton
+          Left = 328
+          Top = 0
+          ExplicitLeft = 328
+          ExplicitTop = 0
+        end
+        inherited SpeedButton_VidSize: TSpeedButton
+          Top = 15
+          ExplicitTop = 15
+        end
+        inherited Label3: TLabel
+          Width = 51
+          ExplicitWidth = 51
+        end
+        inherited Label4: TLabel
+          Width = 44
+          ExplicitWidth = 44
+        end
+        inherited SpeedButton2: TSpeedButton
+          OnClick = Frame_Video1SpeedButton2Click
+        end
+      end
+      inherited Panel_Bottom: TPanel
+        Width = 373
+        Height = 427
+        BevelOuter = bvNone
+        ExplicitTop = 65
+        ExplicitWidth = 373
+        ExplicitHeight = 427
+        inherited Label_VideoSize: TLabel
+          Width = 50
+          ExplicitWidth = 50
+        end
+        inherited Label_fps: TLabel
+          Width = 90
+          ExplicitWidth = 90
+        end
+        inherited Label2: TLabel
+          Width = 49
+          ExplicitWidth = 49
+        end
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 496
+    Width = 734
+    Height = 50
+    Align = alBottom
+    BevelKind = bkFlat
+    BevelOuter = bvNone
+    TabOrder = 1
+  end
+  object Panel2: TPanel
+    Left = 377
+    Top = 0
+    Width = 357
+    Height = 496
+    Align = alClient
+    BevelKind = bkFlat
+    BevelOuter = bvNone
+    TabOrder = 2
+    object Image1: TImage
+      Left = 6
+      Top = 71
+      Width = 331
+      Height = 290
+    end
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 152
+    Top = 384
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    Left = 272
+    Top = 392
+  end
+end

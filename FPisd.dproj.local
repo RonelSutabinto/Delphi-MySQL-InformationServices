@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2011/06/13 21:45:31.781.dfm,D:\applications\zaneco\flexi pack\Flex ISD\computecharges.dfm=D:\applications\zaneco\flexi pack\Flex ISD\Unit1.dfm</Transaction>
+    <Transaction>2011/06/13 21:45:31.781.pas,D:\applications\zaneco\flexi pack\Flex ISD\computecharges.pas=D:\applications\zaneco\flexi pack\Flex ISD\Unit1.pas</Transaction>
+    <Transaction>2017/02/06 14:40:23.052.pas,F:\Edit Source Code\2017\ISD\Flex ISD 2017-02-06\shedUserFrm.pas=F:\Edit Source Code\2017\ISD\Flex ISD 2017-02-06\Unit1.pas</Transaction>
+    <Transaction>2017/02/06 14:40:23.052.dfm,F:\Edit Source Code\2017\ISD\Flex ISD 2017-02-06\shedUserFrm.dfm=F:\Edit Source Code\2017\ISD\Flex ISD 2017-02-06\Unit1.dfm</Transaction>
+    <Transaction>2017/03/10 17:00:37.145.pas,D:\Source Codes\Techinical Side - - - - - - - - Programer 2\Flexi ISD\Flex ISD 2017-03-09\webcam\MainForm.pas=</Transaction>
+    <Transaction>2017/03/10 17:00:37.145.dfm,D:\Source Codes\Techinical Side - - - - - - - - Programer 2\Flexi ISD\Flex ISD 2017-03-09\webcam\MainForm.dfm=</Transaction>
+    <Transaction>2017/12/18 10:31:24.000.141,=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\queHistoryForm.pas</Transaction>
+    <Transaction>2017/12/18 10:34:28.000.544,=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\callerFrm.pas</Transaction>
+    <Transaction>2017/12/19 08:28:25.000.882,=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.pas</Transaction>
+    <Transaction>2017/12/19 08:28:47.000.030,D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\callerISDForm.pas=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.pas</Transaction>
+    <Transaction>2017/12/19 08:28:47.000.030,D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\callerISDForm.dfm=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.dfm</Transaction>
+    <Transaction>2017/12/19 09:20:21.000.192,D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\callerFrm.pas=</Transaction>
+    <Transaction>2017/12/19 11:08:47.000.501,=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.pas</Transaction>
+    <Transaction>2017/12/19 11:09:07.000.133,D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\proceedCashierFrm.dfm=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.dfm</Transaction>
+    <Transaction>2017/12/19 11:09:07.000.133,D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\proceedCashierFrm.pas=D:\Edit Source Code\2017\Queuing\Flex ISD 2017-10-17\Unit1.pas</Transaction>
+    <Transaction>2020/10/12 19:20:50.000.513,=D:\My Source Code\2020\Delphi\zaneco\source code\Flex ISD 2020-10-09\contacttracinghistoryFrm.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="webcam"/>
+    <File Path="webcam\DirectX"/>
+    <File Path="webcam\DirectX\Direct3D9.pas"/>
+    <File Path="webcam\DirectX\DirectDraw.pas"/>
+    <File Path="webcam\DirectX\DirectShow9.pas"/>
+    <File Path="webcam\DirectX\DirectSound.pas"/>
+    <File Path="webcam\DirectX\DXTypes.pas"/>
+    <File Path="webcam\CameraForm.pas"/>
+    <File Path="webcam\CameraForm.dfm"/>
+    <File Path="webcam\Frame_Video.pas"/>
+    <File Path="webcam\Frame_Video.dfm"/>
+    <File Path="webcam\VFrames.pas"/>
+    <File Path="webcam\VSample.pas"/>
+    <File Path="callerISDForm.pas"/>
+    <File Path="callerISDForm.dfm"/>
+    <File Path="computecharges.pas"/>
+    <File Path="computecharges.dfm"/>
+    <File Path="Data.pas"/>
+    <File Path="Data.dfm"/>
+    <File Path="FlexMenu.pas"/>
+    <File Path="FlexMenu.dfm"/>
+    <File Path="FPISDIntro.pas"/>
+    <File Path="FPISDIntro.dfm"/>
+    <File Path="MODTOOLS.PAS"/>
+    <File Path="proceedCashierFrm.pas"/>
+    <File Path="proceedCashierFrm.dfm"/>
+    <File Path="queHistoryForm.pas"/>
+    <File Path="queHistoryForm.dfm"/>
+    <File Path="SeniorCitizen.pas"/>
+    <File Path="SeniorCitizen.dfm"/>
+    <File Path="shedUserFrm.pas"/>
+    <File Path="shedUserFrm.dfm"/>
+    <File Path="contacttracinghistoryFrm.pas"/>
+    <File Path="contacttracinghistoryFrm.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>
