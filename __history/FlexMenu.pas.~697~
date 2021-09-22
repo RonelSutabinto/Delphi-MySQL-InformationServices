@@ -42,7 +42,7 @@ uses
   QuickRpt,
   QRCtrls,
   jpeg, CRGrid,DateUtils, AdvOfficeButtons, Tabs, Buttons, ShellApi, PngImage,
-  CRDBGrid1, AdvSmoothButton, frxClass, frxDBSet;
+  CRDBGrid1, AdvSmoothButton, frxClass, frxDBSet, QExport4, QExport4XLS;
 
 type
   TFPISDMainMenuForm = class(TForm)
@@ -2182,6 +2182,8 @@ type
     checkQ: TMyQuery;
     delmemberFilterQ: TMyQuery;
     delmemberFilterQpass: TStringField;
+    complaintExp: TQExport4XLS;
+    NxLinkLabel13: TNxLinkLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Timer1Timer(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -2406,6 +2408,7 @@ type
     procedure RefreshRecords1Click(Sender: TObject);
     procedure complaintCategory();
     procedure SearchUserClick(Sender: TObject);
+    procedure NxLinkLabel13Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -2417,6 +2420,7 @@ type
 var
   FPISDMainMenuForm: TFPISDMainMenuForm;
   UpdateSelect : Integer;
+  complaintisExport : Boolean ;
 
 implementation
 
@@ -2819,7 +2823,7 @@ begin
            end;  }
         complaintdatefrom.Date  := StartOfTheMonth(Now);
         complaintdateto.Date    := EndOfTheMonth(Now);
-        filtercomplaints_linkClick(self);
+
 
         ISDData.NewApplicants.Close;
         ISDData.NewApplicants.FilterSQL := '';
@@ -2830,9 +2834,9 @@ begin
          MyNoteBook.ActivePage         := TabComplaints;
          SearchComplaint.SetFocus;
 
-         countcomplaintsrecords;
-
-        
+         //countcomplaintsrecords;
+         filtercomplaints_link.Caption := 'View Pending Complaints - Off';
+         filtercomplaints_linkClick(self);
        end;
 
    4 : begin
@@ -3643,7 +3647,9 @@ end;
 
 procedure TFPISDMainMenuForm.userentry_boxClick(Sender: TObject);
 begin
-  SearchComplaintButtonClick(Sender);
+  //SearchComplaintButtonClick(Sender);
+  filtercomplaints_link.Caption := 'View Pending Complaints - Off';
+  filtercomplaints_linkClick(self);
 end;
 
 procedure TFPISDMainMenuForm.AdvSmoothButton1Click(Sender: TObject);
@@ -3986,11 +3992,13 @@ end;
 procedure TFPISDMainMenuForm.NxLinkLabel6Click(Sender: TObject);
 begin
   //SearchComplaintButtonClick(SELF);
+  filtercomplaints_link.Caption := 'View Pending Complaints - Off';
   filtercomplaints_linkClick(self);
 end;
 
 procedure TFPISDMainMenuForm.SearchComplaintButtonClick(Sender: TObject);
 begin
+  filtercomplaints_link.Caption := 'View Pending Complaints - Off';
   filtercomplaints_linkClick(self);
 {  With ISDData do
    begin
@@ -4126,9 +4134,15 @@ end;
 procedure TFPISDMainMenuForm.NxLinkLabel79Click(Sender: TObject);
 var
  Memo3 : TfrxMemoView;
+ isuedStr : String;
 begin
 
    Memo3      := complaintRep.FindComponent('Memo3') as TfrxMemoView;
+
+   if userentry_box.Checked = true then
+      isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
+    else
+      isuedStr := 'isuedBy like '+quotedstr('%');
 
    isoComplaintsQ2.Close;
    isoComplaintsQ2.Open;
@@ -4140,22 +4154,16 @@ begin
       complaintsreport2.sql.Add('select complaints.*, ');
       complaintsreport2.sql.Add('if(others is not NULL,concat(ifnull(complaint,''''),'' ( '',others,'' )''),ifnull(complaint,''''))  complaintF' );
       complaintsreport2.sql.Add('from complaints where date_format(datefiled,''%Y-%m-%d'') between :datefrom and :dateto  ');
-      complaintsreport2.sql.Add('and actiontaken is not null order by idcomplaints');
+      complaintsreport2.sql.Add(' order by idcomplaints');
 
       complaintsreport2.ParamByName('datefrom').AsDate := DateTimeFrom.Date;
       complaintsreport2.ParamByName('dateto').AsDate   := DateTimeTo.Date;
       complaintsreport2.Open;
       ISDData.Signatories.OPEN;
 
-      //PeriodCovered.Caption     := 'Period Covered : '+ datetostr(DateTimeFrom.Date) + ' - ' + datetostr(DateTimeTo.Date);
-      //QuickRep2.PreviewWidth    := Screen.Width;
-      //QuickRep2.PreviewHeight   := Screen.Height;
-      //QuickRep2.Preview;
-
-      //FormatDateTime('m/d/yyyy',tmpQ.FieldByName('ORDate').AsDateTime);
       Memo3.Text := 'Period Covered : '+datetostr(DateTimeFrom.Date) + ' - ' + datetostr(DateTimeTo.Date);
-      complaintRep.ShowReport;
-      complaintsreport2.Close;
+      //complaintRep.ShowReport;
+      //complaintsreport2.Close;
     end
 
     //Print ALL Specific Category Printing=======================
@@ -4195,7 +4203,7 @@ begin
       //======End Feltering Category===================================
       //===============================================================
 
-      complaintsreport2.sql.Add('and actiontaken is not null order by idcomplaints');
+      complaintsreport2.sql.Add(' order by idcomplaints');
 
       complaintsreport2.ParamByName('datefrom').AsDate := DateTimeFrom.Date;
       complaintsreport2.ParamByName('dateto').AsDate   := DateTimeTo.Date;
@@ -4203,8 +4211,8 @@ begin
       ISDData.Signatories.OPEN;
 
       Memo3.Text := 'Period Covered : '+datetostr(DateTimeFrom.Date) + ' - ' + datetostr(DateTimeTo.Date);
-      complaintRep.ShowReport;
-      complaintsreport2.Close;
+      //complaintRep.ShowReport;
+      //complaintsreport2.Close;
     end
     else
       begin
@@ -4212,22 +4220,38 @@ begin
           complaintsreport2.sql.Add('select complaints.*, ');
           complaintsreport2.sql.Add('if(others is not NULL,concat(ifnull(complaint,''''),'' ( '',others,'' )''),ifnull(complaint,''''))  complaintF' );
           complaintsreport2.sql.Add(' from complaints where date_format(datefiled,''%Y-%m-%d'') between :datefrom and :dateto and');
-          complaintsreport2.sql.Add(' complaint = :complaint and actiontaken is not null order by idcomplaints');
+          complaintsreport2.sql.Add(' complaint = :complaint order by idcomplaints');
 
           complaintsreport2.ParamByName('datefrom').AsDate := DateTimeFrom.Date;
           complaintsreport2.ParamByName('dateto').AsDate   := DateTimeTo.Date;
           complaintsreport2.ParamByName('complaint').Text  := ComboBoxCategory.text;
           complaintsreport2.Open;
           ISDData.Signatories.OPEN;
-
-          //PeriodCovered.Caption     := 'Period Covered : '+ datetostr(DateTimeFrom.Date) + ' - ' + datetostr(DateTimeTo.Date);
-          //QuickRep2.PreviewWidth    := Screen.Width;
-          //QuickRep2.PreviewHeight   := Screen.Height;
-          //QuickRep2.Preview;
           Memo3.Text := 'Period Covered : '+datetostr(DateTimeFrom.Date) + ' - ' + datetostr(DateTimeTo.Date);
-          complaintRep.ShowReport;
-          complaintsreport2.Close;
       end;
+
+      //====Filtering the order response==================
+      If (filtercomplaints_link.Caption = 'View Pending Complaints - Off') then
+        begin
+           complaintsreport2.Filtered := false;
+           complaintsreport2.FilterSQL := 'accomplished like '+quotedstr('1')+ ' and '+ isuedStr;
+           complaintsreport2.Filtered := true;
+        end
+      else if (filtercomplaints_link.Caption = 'View Pending Complaints - On') then
+        begin
+           complaintsreport2.Filtered := false;
+           complaintsreport2.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
+           complaintsreport2.Filtered := true;
+        end
+      else if ((filtercomplaints_link.Caption = 'View All Complaints')) then
+        begin
+           complaintsreport2.Filtered := false;
+           complaintsreport2.FilterSQL := isuedStr;
+           complaintsreport2.Filtered := true;
+        end;
+
+      complaintRep.ShowReport;
+      complaintsreport2.Close;
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel7Click(Sender: TObject);
@@ -4941,6 +4965,12 @@ begin
   BoardResolutionNumber.SetFocus;
 end;
 
+procedure TFPISDMainMenuForm.NxLinkLabel13Click(Sender: TObject);
+begin
+    complaintExp.FileName := ExtractFilePath(Application.ExeName) + 'Complaints.xls';
+    complaintExp.Execute;
+end;
+
 procedure TFPISDMainMenuForm.NxButton9Click(Sender: TObject);
 begin
   ResolutionNumberPanel.Visible := False;
@@ -5177,7 +5207,7 @@ begin
        filtercomplaints_link.Caption := 'View Pending Complaints - On';
        complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
        complaints.Filtered := true;
-       filtercomplaints_link.Font.Color := clGreen;
+       filtercomplaints_link.Font.Color := clRed;
     end
   else if (filtercomplaints_link.Caption = 'View Pending Complaints - On') then
     begin
@@ -5185,7 +5215,7 @@ begin
        filtercomplaints_link.Caption := 'View Pending Complaints - Off';
        complaints.FilterSQL := 'accomplished like '+quotedstr('1')+ ' and '+ isuedStr;
        complaints.Filtered := true;
-       filtercomplaints_link.Font.Color := clRed;
+       filtercomplaints_link.Font.Color := clGreen;
     end
   else if ((filtercomplaints_link.Caption = 'View Pending Complaints - Off')) then
     begin

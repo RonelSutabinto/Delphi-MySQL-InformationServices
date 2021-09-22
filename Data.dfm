@@ -11,6 +11,7 @@ object ISDData: TISDData
         IgnoreErrors = True
       end>
     Username = '19zan72'
+    Connected = True
     LoginPrompt = False
     Left = 496
     Top = 278
@@ -130,7 +131,9 @@ object ISDData: TISDData
       
         'where date_format(datefiled,'#39'%Y-%m-%d'#39') between :datefrom and :d' +
         'ateto and'
-      '      consumername like :consumername and category = :category'
+      
+        '       category = :category and (consumername like :consumername' +
+        ' or AccountNumber like :consumername)'
       'order by idcomplaints')
     Left = 233
     Top = 38
@@ -147,12 +150,17 @@ object ISDData: TISDData
       end
       item
         DataType = ftUnknown
+        Name = 'category'
+        Value = nil
+      end
+      item
+        DataType = ftUnknown
         Name = 'consumername'
         Value = nil
       end
       item
         DataType = ftUnknown
-        Name = 'category'
+        Name = 'consumername'
         Value = nil
       end>
     object complaintsidComplaints: TLargeintField
