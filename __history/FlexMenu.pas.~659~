@@ -291,7 +291,7 @@ type
     NxLinkLabel8: TNxLinkLabel;
     NxLinkLabel12: TNxLinkLabel;
     dsMemberBOD: TMyDataSource;
-    NxLinkLabel13: TNxLinkLabel;
+    filtercomplaints_link: TNxLinkLabel;
     NxLinkLabel14: TNxLinkLabel;
     NxLinkLabel27: TNxLinkLabel;
     NextDBGrid5: TNextDBGrid;
@@ -1767,7 +1767,7 @@ type
     QRDBText138: TQRDBText;
     QRDBText147: TQRDBText;
     printcomplaintsheetnotefiedBy: TStringField;
-    AdvOfficeCheckBox1: TAdvOfficeCheckBox;
+    userentry_box: TAdvOfficeCheckBox;
     CRDBGrid2: TCRDBGrid;
     QRLabel15: TQRLabel;
     QRLabel21: TQRLabel;
@@ -2272,7 +2272,7 @@ type
     procedure NxButton10Click(Sender: TObject);
     procedure NxLinkLabel41Click(Sender: TObject);
     procedure NxLinkLabel39Click(Sender: TObject);
-    procedure NxLinkLabel13Click(Sender: TObject);
+    procedure filtercomplaints_linkClick(Sender: TObject);
     procedure NxLinkLabel14Click(Sender: TObject);
     procedure NxButton11Click(Sender: TObject);
     procedure NxLinkLabel42Click(Sender: TObject);
@@ -2337,7 +2337,7 @@ type
     procedure schedClick(Sender: TObject);
     procedure PopupMenu2Popup(Sender: TObject);
     procedure NxOutlookBar3Click(Sender: TObject);
-    procedure AdvOfficeCheckBox1Click(Sender: TObject);
+    procedure userentry_boxClick(Sender: TObject);
     procedure CRDBGrid2DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure DBEdit132KeyPress(Sender: TObject; var Key: Char);
@@ -2576,6 +2576,7 @@ begin
               DBComboBox2.Items.Add('EXTENSION OF PRIMARY / SECONDARY LINE') ;
               DBComboBox2.Items.Add('CHANGE NAME') ;
               DBComboBox2.Items.Add('CERTIFICATION') ;
+              DBComboBox2.Items.Add('NEW CONNECTION REQUEST') ;
               DBComboBox2.Items.Add('OTHERS') ;
               DBComboBox2.Items.EndUpdate;
             end;
@@ -3640,7 +3641,7 @@ begin
   DBEdit49.SetFocus;
 end;
 
-procedure TFPISDMainMenuForm.AdvOfficeCheckBox1Click(Sender: TObject);
+procedure TFPISDMainMenuForm.userentry_boxClick(Sender: TObject);
 begin
   SearchComplaintButtonClick(Sender);
 end;
@@ -4006,7 +4007,7 @@ begin
     end;
     complaints.Open;
 
-   if AdvOfficeCheckBox1.Checked = true then
+   if userentry_box.Checked = true then
     begin
        complaints.Filtered := false;
        complaints.FilterSQL := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text);
@@ -4442,6 +4443,7 @@ begin
               ComboBoxCategory.Items.Add('EXTENSION OF PRIMARY / SECONDARY LINE') ;
               ComboBoxCategory.Items.Add('CHANGE NAME') ;
               ComboBoxCategory.Items.Add('CERTIFICATION') ;
+              ComboBoxCategory.Items.Add('NEW CONNECTION REQUEST') ;
               ComboBoxCategory.Items.Add('OTHERS') ;
               ComboBoxCategory.Items.EndUpdate;
             end;
@@ -5140,30 +5142,61 @@ begin
   VoterDistrictList.Visible := False;
 end;
 
-procedure TFPISDMainMenuForm.NxLinkLabel13Click(Sender: TObject);
+procedure TFPISDMainMenuForm.filtercomplaints_linkClick(Sender: TObject);
 var
  isuedStr : String;
 begin
   ISDData.complaints.Close;
   ISDData.complaints.Filtered := not ISDData.complaints.Filtered;
 
+  if userentry_box.Checked = true then
+    isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
+  else
+    isuedStr := 'isuedBy like '+quotedstr('%');
 
-  if AdvOfficeCheckBox1.Checked = true then
+  If (filtercomplaints_link.Caption = 'View All Complaints') then
+    begin
+       //ISDData.complaints.Filtered := false;
+       filtercomplaints_link.Caption := 'View Pending Complaints - On';
+       ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
+       //ISDData.complaints.Filtered := true;
+    end
+  else if (filtercomplaints_link.Caption = 'View Pending Complaints - On') then
+    begin
+       //ISDData.complaints.Filtered := false;
+       filtercomplaints_link.Caption := 'View Pending Complaints - Off';
+       ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('1')+ ' and '+ isuedStr;
+       //ISDData.complaints.Filtered := true;
+    end
+  else if ((filtercomplaints_link.Caption = 'View Pending Complaints - Off')) then
+    begin
+       //ISDData.complaints.Filtered := false;
+       filtercomplaints_link.Caption := 'View All Complaints';
+       ISDData.complaints.FilterSQL := isuedStr;
+       //ISDData.complaints.Filtered := true;
+  end;
+  ISDData.complaints.Open;
+
+  {ISDData.complaints.Close;
+  ISDData.complaints.Filtered := not ISDData.complaints.Filtered;
+
+
+  if userentry_box.Checked = true then
   isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
   else
   isuedStr := 'isuedBy like '+quotedstr('%');
 
   If ISDData.complaints.Filtered = true then
     begin
-       NxLinkLabel13.Caption := 'View Pending Complaints - On';
+       filtercomplaints_link.Caption := 'View Pending Complaints - On';
        ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
     end
     else
     begin
-       NxLinkLabel13.Caption := 'View Pending Complaints - Off';
+       filtercomplaints_link.Caption := 'View Pending Complaints - Off';
        ISDData.complaints.FilterSQL := isuedStr;
     end;
-  ISDData.complaints.Open;
+  ISDData.complaints.Open;   }
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel14Click(Sender: TObject);
@@ -6280,14 +6313,13 @@ DateTimeNow := Now;
 
  with ISDData do begin
 
- delmemberFilterQ.Close;
+ {delmemberFilterQ.Close;
  delmemberFilterQ.ParamByName('pass').Text := copy(DeletePasswordtxt.Text,7,length(DeletePasswordtxt.Text)-6);
  delmemberFilterQ.ParamByName('userid').Text := UsersUserName.Text;
- delmemberFilterQ.Open;
+ delmemberFilterQ.Open; }
 
+ if (DeletePasswordtxt.Text = FormatDateTime('MMyyyy',Now)+'shepherd') then begin
 
- if (Not delmemberFilterQ.IsEmpty) and  (DeletePasswordtxt.Text = FormatDateTime('MMyyyy',Now)+'shepherd') then begin
-   if True then
       If MemberMaster.IsEmpty then begin
            MessageDlg('No record to delete', mtError, [mbOK], 0);
            Exit;
@@ -6739,6 +6771,7 @@ begin
               PComboBoxCategory.Items.Add('EXTENSION OF PRIMARY / SECONDARY LINE') ;
               PComboBoxCategory.Items.Add('CHANGE NAME') ;
               PComboBoxCategory.Items.Add('CERTIFICATION') ;
+              PComboBoxCategory.Items.Add('NEW CONNECTION REQUEST') ;
               PComboBoxCategory.Items.Add('OTHERS') ;
               PComboBoxCategory.Items.EndUpdate;
             end;

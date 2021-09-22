@@ -526,8 +526,8 @@ object ComputeChargesForm: TComputeChargesForm
     end
   end
   object AccountListPanel: TNxHeaderPanel
-    Left = 2
-    Top = 202
+    Left = 161
+    Top = 122
     Width = 358
     Height = 308
     Caption = 'List of Accounts'
