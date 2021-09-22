@@ -2807,7 +2807,7 @@ begin
        end;
 
    3 : begin
-         With ISDData do
+        { With ISDData do
            begin
              complaints.Close;
              complaints.ParamByName('consumername').Text := '%';
@@ -2816,9 +2816,9 @@ begin
              complaints.ParamByName('datefrom').AsDate   := StartOfTheMonth(Now);
              complaints.ParamByName('dateto').AsDate     := EndOfTheMonth(Now);
              complaints.Open;
-           end;
-         complaintdatefrom.Date  := StartOfTheMonth(Now);
-         complaintdateto.Date    := EndOfTheMonth(Now);
+           end;  }
+        complaintdatefrom.Date  := StartOfTheMonth(Now);
+        complaintdateto.Date    := EndOfTheMonth(Now);
 
 
         ISDData.NewApplicants.Close;
@@ -2830,9 +2830,9 @@ begin
          MyNoteBook.ActivePage         := TabComplaints;
          SearchComplaint.SetFocus;
 
-         countcomplaintsrecords;
-
-        
+         //countcomplaintsrecords;
+         filtercomplaints_link.Caption := 'View Pending Complaints - Off';
+         filtercomplaints_linkClick(self);
        end;
 
    4 : begin
@@ -3643,7 +3643,9 @@ end;
 
 procedure TFPISDMainMenuForm.userentry_boxClick(Sender: TObject);
 begin
-  SearchComplaintButtonClick(Sender);
+  //SearchComplaintButtonClick(Sender);
+  filtercomplaints_link.Caption := 'View Pending Complaints - Off';
+  filtercomplaints_linkClick(self);
 end;
 
 procedure TFPISDMainMenuForm.AdvSmoothButton1Click(Sender: TObject);
@@ -3985,12 +3987,14 @@ end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel6Click(Sender: TObject);
 begin
-SearchComplaintButtonClick(SELF);
+  //SearchComplaintButtonClick(SELF);
+  filtercomplaints_linkClick(self);
 end;
 
 procedure TFPISDMainMenuForm.SearchComplaintButtonClick(Sender: TObject);
 begin
-  With ISDData do
+  filtercomplaints_linkClick(self);
+{  With ISDData do
    begin
     complaints.Close;
     complaints.ParamByName('consumername').Text := '%'+SearchComplaint.Text+'%';
@@ -4020,7 +4024,7 @@ begin
        complaints.Filtered := true;
     end;
 
-   end;
+   end;}
 
 end;
 
@@ -5146,8 +5150,23 @@ procedure TFPISDMainMenuForm.filtercomplaints_linkClick(Sender: TObject);
 var
  isuedStr : String;
 begin
-  ISDData.complaints.Close;
-  ISDData.complaints.Open;
+with ISDData do
+begin
+    complaints.Close;
+    complaints.ParamByName('consumername').Text := '%'+SearchComplaint.Text+'%';
+    complaints.ParamByName('datefrom').AsDate   := complaintdatefrom.Date;
+    complaints.ParamByName('Dateto').AsDate     := complaintdateto.Date;
+    case tabset1.tabindex of
+      0:  complaints.ParamByName('category').text     := 'METERING';
+      1:  complaints.ParamByName('category').text     := 'SERVICE DROP';
+      2:  complaints.ParamByName('category').text     := 'PRIMARY / SECONDARY LINE';
+      3:  complaints.ParamByName('category').text     := 'DISTRIBUTION TRANSFORMER';
+      4:  complaints.ParamByName('category').text     := 'DISTRIBUTION / SERVICE POLE';
+      5:  complaints.ParamByName('category').text     := 'OTHER EQUIPMENT';
+      6:  complaints.ParamByName('category').text     := 'OTHERS';
+    end;
+    complaints.Open;
+
 
   if userentry_box.Checked = true then
     isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
@@ -5156,50 +5175,31 @@ begin
 
   If (filtercomplaints_link.Caption = 'View All Complaints') then
     begin
-       ISDData.complaints.Filtered := false;
+       complaints.Filtered := false;
        filtercomplaints_link.Caption := 'View Pending Complaints - On';
-       ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
-       ISDData.complaints.Filtered := true;
+       complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
+       complaints.Filtered := true;
        filtercomplaints_link.Font.Color := clGreen;
     end
   else if (filtercomplaints_link.Caption = 'View Pending Complaints - On') then
     begin
-       ISDData.complaints.Filtered := false;
+       complaints.Filtered := false;
        filtercomplaints_link.Caption := 'View Pending Complaints - Off';
-       ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('1')+ ' and '+ isuedStr;
-       ISDData.complaints.Filtered := true;
-       filtercomplaints_link..Font.Color := clRed;
+       complaints.FilterSQL := 'accomplished like '+quotedstr('1')+ ' and '+ isuedStr;
+       complaints.Filtered := true;
+       filtercomplaints_link.Font.Color := clRed;
     end
   else if ((filtercomplaints_link.Caption = 'View Pending Complaints - Off')) then
     begin
-       ISDData.complaints.Filtered := false;
+       complaints.Filtered := false;
        filtercomplaints_link.Caption := 'View All Complaints';
-       ISDData.complaints.FilterSQL := isuedStr;
-       ISDData.complaints.Filtered := true;
-       filtercomplaints_link..Font.Color := clBlack;
+       complaints.FilterSQL := isuedStr;
+       complaints.Filtered := true;
+       filtercomplaints_link.Font.Color := clBlack;
   end;
-  //ISDData.complaints.Open;
 
-  {ISDData.complaints.Close;
-  ISDData.complaints.Filtered := not ISDData.complaints.Filtered;
-
-
-  if userentry_box.Checked = true then
-  isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
-  else
-  isuedStr := 'isuedBy like '+quotedstr('%');
-
-  If ISDData.complaints.Filtered = true then
-    begin
-       filtercomplaints_link.Caption := 'View Pending Complaints - On';
-       ISDData.complaints.FilterSQL := 'accomplished like '+quotedstr('0')+ ' and '+ isuedStr;
-    end
-    else
-    begin
-       filtercomplaints_link.Caption := 'View Pending Complaints - Off';
-       ISDData.complaints.FilterSQL := isuedStr;
-    end;
-  ISDData.complaints.Open;   }
+end;
+  
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel14Click(Sender: TObject);
