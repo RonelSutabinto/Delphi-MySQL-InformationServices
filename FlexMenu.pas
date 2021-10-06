@@ -2422,6 +2422,7 @@ var
   FPISDMainMenuForm: TFPISDMainMenuForm;
   UpdateSelect : Integer;
   complaintisExport : Boolean ;
+  isReconadd : Boolean;
 
 implementation
 
@@ -5666,6 +5667,8 @@ begin
   ISDData.Reconrecondate.AsDateTime := Now;
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconisuedBy.Text         := ISDData.UsersUserID.Text;
+
+  isReconadd := true;
 end;
 
 procedure TFPISDMainMenuForm.DBEdit88KeyPress(Sender: TObject;
@@ -5742,10 +5745,44 @@ begin
 end;
 
 procedure TFPISDMainMenuForm.ReconSaveClick(Sender: TObject);
+var idrecon : String;
 begin
-  if nonpay.Checked = true then
-    isddata.ReconORNumber.text := 'Non-payment';
-  ISDData.Recon.Post;
+  if isReconadd then
+  begin
+    if nonpay.Checked = true then
+      isddata.ReconORNumber.text := 'Non-payment';
+
+    ISDData.Recon.Post;
+  end
+  else
+  begin
+    if nonpay.Checked = true then
+        begin
+          if (Length(isddata.ReconORNumber.Text)<=2) or (isddata.ReconORNumber.IsNull) then
+            begin
+              isddata.ReconORNumber.text := 'Non-payment';
+              ISDData.Recon.Post;
+            end;
+        end
+      else
+        begin
+          idrecon := ISDData.Reconidrecon.Text;
+          ISDData.Recon.Post;
+
+          if (isddata.ReconORNumber.Text = 'Non-payment') or (Length(isddata.ReconORNumber.Text)<=2) then
+            begin
+              tmpQ.SQL.Clear;
+              tmpQ.SQL.Add('update recon set ORNumber = :ornumber where idrecon = :idrecon');
+              tmpQ.ParamByName('ornumber').Value := NULL;
+              tmpQ.ParamByName('idrecon').Text := idrecon;
+              tmpQ.Execute;
+            end;
+
+        end;
+  end;
+
+
+
   ReconPanel.Visible    := False;
   ReconAdd.Visible      := True;
   ReconDelete.Visible   := True;
@@ -6521,9 +6558,17 @@ begin
   NxLinkLabel58.Visible := False;
 
   DBEdit87.SetFocus;
+
+  if ISDData.ReconORNumber.Text = 'Non-payment' then
+    nonpay.Checked := true
+  else
+    nonpay.Checked := false;
+
   ISDData.Recon.Edit;
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconDateRecon.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
+
+  isReconadd := true;
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel59Click(Sender: TObject);

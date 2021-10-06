@@ -4481,8 +4481,8 @@ begin
    Complaintsummarypanel.Visible  := true;
    Complaintsummarypanel.top      := 229;
    Complaintsummarypanel.left     := 233;
-   datetimeFrom.DateTime:= StartOfTheMonth(Now);
-   datetimeTo.DateTime:= EndOfTheMonth(Now);
+   datetimeFrom.DateTime:= complaintdatefrom.DateTime;
+   datetimeTo.DateTime:= complaintdateto.DateTime;
    ComboBoxCategory.ItemIndex := 1;
 end;
 
@@ -4972,7 +4972,7 @@ procedure TFPISDMainMenuForm.NxLinkLabel13Click(Sender: TObject);
 begin
     complaintExportOrPreview;
 
-    complaintExp.FileName := ExtractFilePath(Application.ExeName) + 'Complaints.xls';
+    complaintExp.FileName := ExtractFilePath(Application.ExeName) + 'ComplaintsSummary.xls';
     complaintExp.Execute;
 end;
 
@@ -5742,10 +5742,33 @@ begin
 end;
 
 procedure TFPISDMainMenuForm.ReconSaveClick(Sender: TObject);
+var idrecon : String;
 begin
   if nonpay.Checked = true then
-    isddata.ReconORNumber.text := 'Non-payment';
-  ISDData.Recon.Post;
+    begin
+      if (Length(isddata.ReconORNumber.Text)<=2) or (isddata.ReconORNumber.Value is NULL) then
+        begin
+          isddata.ReconORNumber.text := 'Non-payment';
+          ISDData.Recon.Post;
+        end;
+    end
+  else
+    begin
+      idrecon := ISDData.Reconidrecon.Text;
+      ISDData.Recon.Post;
+
+      if (isddata.ReconORNumber.Text = 'Non-payment') or (Length(isddata.ReconORNumber.Text)<=2) then
+        begin
+          tmpQ.SQL.Clear;
+          tmpQ.SQL.Add('update recon set ORNumber = :ornumber where idrecon = :idrecon');
+          tmpQ.ParamByName('ornumber').Value := NULL;
+          tmpQ.ParamByName('idrecon').Text := idrecon;
+          tmpQ.Execute;
+        end;
+
+    end;
+
+
   ReconPanel.Visible    := False;
   ReconAdd.Visible      := True;
   ReconDelete.Visible   := True;
@@ -6521,6 +6544,12 @@ begin
   NxLinkLabel58.Visible := False;
 
   DBEdit87.SetFocus;
+
+  if ISDData.ReconORNumber.Text = 'Non-payment' then
+    nonpay.Checked := true
+  else
+    nonpay.Checked := false;
+
   ISDData.Recon.Edit;
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconDateRecon.EditMask   := '!99/99/00 !90:00:00>LL;1;_';

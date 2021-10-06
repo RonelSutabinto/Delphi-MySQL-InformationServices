@@ -2409,6 +2409,7 @@ type
     procedure complaintCategory();
     procedure SearchUserClick(Sender: TObject);
     procedure NxLinkLabel13Click(Sender: TObject);
+    procedure complaintExportOrPreview();
   private
     { Private declarations }
   public
@@ -2421,6 +2422,7 @@ var
   FPISDMainMenuForm: TFPISDMainMenuForm;
   UpdateSelect : Integer;
   complaintisExport : Boolean ;
+  isReconadd : Boolean;
 
 implementation
 
@@ -4131,13 +4133,12 @@ begin
   NxEdit1.SetFocus;
 end;
 
-procedure TFPISDMainMenuForm.NxLinkLabel79Click(Sender: TObject);
+procedure TFPISDMainMenuForm.complaintExportOrPreview();
 var
  Memo3 : TfrxMemoView;
  isuedStr : String;
 begin
-
-   Memo3      := complaintRep.FindComponent('Memo3') as TfrxMemoView;
+     Memo3      := complaintRep.FindComponent('Memo3') as TfrxMemoView;
 
    if userentry_box.Checked = true then
       isuedStr := ' isuedBy like '+quotedstr(ISDData.UsersUserID.Text)
@@ -4249,7 +4250,10 @@ begin
            complaintsreport2.FilterSQL := isuedStr;
            complaintsreport2.Filtered := true;
         end;
-
+end;
+procedure TFPISDMainMenuForm.NxLinkLabel79Click(Sender: TObject);
+begin
+      complaintExportOrPreview;
       complaintRep.ShowReport;
       complaintsreport2.Close;
 end;
@@ -4478,8 +4482,8 @@ begin
    Complaintsummarypanel.Visible  := true;
    Complaintsummarypanel.top      := 229;
    Complaintsummarypanel.left     := 233;
-   datetimeFrom.DateTime:= StartOfTheMonth(Now);
-   datetimeTo.DateTime:= EndOfTheMonth(Now);
+   datetimeFrom.DateTime:= complaintdatefrom.DateTime;
+   datetimeTo.DateTime:= complaintdateto.DateTime;
    ComboBoxCategory.ItemIndex := 1;
 end;
 
@@ -4967,7 +4971,9 @@ end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel13Click(Sender: TObject);
 begin
-    complaintExp.FileName := ExtractFilePath(Application.ExeName) + 'Complaints.xls';
+    complaintExportOrPreview;
+
+    complaintExp.FileName := ExtractFilePath(Application.ExeName) + 'ComplaintsSummary.xls';
     complaintExp.Execute;
 end;
 
@@ -5661,6 +5667,8 @@ begin
   ISDData.Reconrecondate.AsDateTime := Now;
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconisuedBy.Text         := ISDData.UsersUserID.Text;
+
+  isReconadd := true;
 end;
 
 procedure TFPISDMainMenuForm.DBEdit88KeyPress(Sender: TObject;
@@ -5737,10 +5745,38 @@ begin
 end;
 
 procedure TFPISDMainMenuForm.ReconSaveClick(Sender: TObject);
+var idrecon : String;
 begin
+  if isReconadd then
+  begin
+
+  end;
+
   if nonpay.Checked = true then
-    isddata.ReconORNumber.text := 'Non-payment';
-  ISDData.Recon.Post;
+    begin
+      if (Length(isddata.ReconORNumber.Text)<=2) or (isddata.ReconORNumber.IsNull) then
+        begin
+          isddata.ReconORNumber.text := 'Non-payment';
+          ISDData.Recon.Post;
+        end;
+    end
+  else
+    begin
+      idrecon := ISDData.Reconidrecon.Text;
+      ISDData.Recon.Post;
+
+      if (isddata.ReconORNumber.Text = 'Non-payment') or (Length(isddata.ReconORNumber.Text)<=2) then
+        begin
+          tmpQ.SQL.Clear;
+          tmpQ.SQL.Add('update recon set ORNumber = :ornumber where idrecon = :idrecon');
+          tmpQ.ParamByName('ornumber').Value := NULL;
+          tmpQ.ParamByName('idrecon').Text := idrecon;
+          tmpQ.Execute;
+        end;
+
+    end;
+
+
   ReconPanel.Visible    := False;
   ReconAdd.Visible      := True;
   ReconDelete.Visible   := True;
@@ -6516,9 +6552,17 @@ begin
   NxLinkLabel58.Visible := False;
 
   DBEdit87.SetFocus;
+
+  if ISDData.ReconORNumber.Text = 'Non-payment' then
+    nonpay.Checked := true
+  else
+    nonpay.Checked := false;
+
   ISDData.Recon.Edit;
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconDateRecon.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
+
+  isReconadd := true;
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel59Click(Sender: TObject);
@@ -6584,10 +6628,7 @@ begin
 if (MessageDlg('Confirm delete', mtConfirmation, [mbYes, mbCancel], 0) = mrCancel) then exit;
 ISDData.complaints.Delete;
 end;
-procedure TFPISDMainMenuForm.complaintExportOrPreview();
-begin
-      //Showmessage
-end;
+
 procedure TFPISDMainMenuForm.complaintCategory();
 begin
     case tabset1.tabindex of
