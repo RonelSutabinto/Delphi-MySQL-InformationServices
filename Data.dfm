@@ -11,7 +11,6 @@ object ISDData: TISDData
         IgnoreErrors = True
       end>
     Username = '19zan72'
-    Connected = True
     LoginPrompt = False
     Left = 496
     Top = 278

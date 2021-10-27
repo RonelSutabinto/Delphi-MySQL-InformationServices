@@ -94,7 +94,7 @@ type
     DBEdit4: TDBEdit;
     DBEdit5: TDBEdit;
     DBEdit6: TDBEdit;
-    NxLinkLabel7: TNxLinkLabel;
+    save_complaintBtn: TNxLinkLabel;
     NxLinkLabel11: TNxLinkLabel;
     NxButton1: TNxButton;
     TabNewApplicant: TNxTabSheet;
@@ -2236,7 +2236,7 @@ type
     procedure ComplaintEditClick(Sender: TObject);
     procedure NxLinkLabel6Click(Sender: TObject);
     procedure SearchComplaintButtonClick(Sender: TObject);
-    procedure NxLinkLabel7Click(Sender: TObject);
+    procedure save_complaintBtnClick(Sender: TObject);
     procedure NxLinkLabel11Click(Sender: TObject);
     procedure DBEdit1KeyPress(Sender: TObject; var Key: Char);
     procedure NxButton1Click(Sender: TObject);
@@ -3820,7 +3820,7 @@ begin
 
   ComplaintAdd.Visible  := False;
   ComplaintEdit.Visible := False;
-  NxLinkLabel7.Enabled := true;
+  save_complaintBtn.Enabled := true;
 
   DBEdit2.SetFocus;
 end;
@@ -3836,17 +3836,17 @@ begin
     end;
 
   if (ISDData.complaintsreceivedby.Text <> ISDData.UsersUserName.Text) or (copy(ISDdata.ComplaintsAccomplished.Text,1,8) = 'Executed') then
-  NxLinkLabel7.Enabled := false
+  save_complaintBtn.Enabled := false
   else
-  NxLinkLabel7.Enabled := true;
+  save_complaintBtn.Enabled := true;
 
   if (copy(ISDdata.UsersUserRestriction.Text,1,9) = 'INSPECTOR' ) and (copy(ISDdata.ComplaintsAccomplished.Text,1,8) <> 'Executed') or
      (copy(ISDdata.UsersUserRestriction.Text,1,13) = 'ADMINISTRATOR' ) and (copy(ISDdata.ComplaintsAccomplished.Text,1,8) <> 'Executed') then
-  NxLinkLabel7.Enabled := true;
+  save_complaintBtn.Enabled := true;
 
-  if isddata.UsersUserName.Text = 'von' then
+  if ((isddata.UsersUserName.Text = 'von') OR (isddata.UsersUserName.Text = 'AME' )) then
   begin
-      NxLinkLabel7.Enabled := true;
+      save_complaintBtn.Enabled := true;
   end;
 
   //if(Not(copy(ISDData.complaintsAccomplished.Text,1,8) = 'Executed' )) then
@@ -4258,7 +4258,7 @@ begin
       complaintsreport2.Close;
 end;
 
-procedure TFPISDMainMenuForm.NxLinkLabel7Click(Sender: TObject);
+procedure TFPISDMainMenuForm.save_complaintBtnClick(Sender: TObject);
 begin
   ISDData.complaintsisuedBy.Text := ISDData.UsersUserID.Text;
   ISDData.complaintscategory.text := Complaintcategorystr;
@@ -6568,7 +6568,7 @@ begin
   ISDData.Reconrecondate.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
   ISDData.ReconDateRecon.EditMask   := '!99/99/00 !90:00:00>LL;1;_';
 
-  isReconadd := true;
+  isReconadd := false;
 end;
 
 procedure TFPISDMainMenuForm.NxLinkLabel59Click(Sender: TObject);
